@@ -1,7 +1,7 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import Command
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 
 from launch_ros.actions import Node
@@ -17,11 +17,9 @@ def generate_launch_description():
                                         description='The path to the robot description relative to the package root'))
 
     package_dir = FindPackageShare(LaunchConfiguration('urdf_package'))
+    urdf_path = PathJoinSubstitution([package_dir, LaunchConfiguration('urdf_package_path')])
 
-    robot_description_content = ParameterValue(
-        Command(['xacro ', package_dir, '/', LaunchConfiguration('urdf_package_path')]),
-        value_type=str,
-    )
+    robot_description_content = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
 
     robot_state_publisher_node = Node(package='robot_state_publisher',
                                       executable='robot_state_publisher',

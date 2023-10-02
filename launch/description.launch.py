@@ -15,6 +15,9 @@ def generate_launch_description():
                                         description='The package where the robot description is located'))
     ld.add_action(DeclareLaunchArgument('urdf_package_path',
                                         description='The path to the robot description relative to the package root'))
+    ld.add_action(DeclareLaunchArgument('use_tim_time',
+                                        default_value='false',
+                                        description='Use simulation clock if true'))
 
     package_dir = FindPackageShare(LaunchConfiguration('urdf_package'))
     urdf_path = PathJoinSubstitution([package_dir, LaunchConfiguration('urdf_package_path')])
@@ -25,6 +28,7 @@ def generate_launch_description():
                                       executable='robot_state_publisher',
                                       parameters=[{
                                           'robot_description': robot_description_content,
+                                          'use_sim_time': LaunchConfiguration('use_sim_time'),
                                       }])
 
     ld.add_action(robot_state_publisher_node)

@@ -20,6 +20,10 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument(name='rviz_config', default_value=default_rviz_config_path,
                                         description='Absolute path to rviz config file'))
 
+    ld.add_action(DeclareLaunchArgument('use_tim_time',
+                                        default_value='false',
+                                        description='Use simulation clock if true'))
+
     # need to manually pass configuration in because of https://github.com/ros2/launch/issues/313
     ld.add_action(IncludeLaunchDescription(
         PathJoinSubstitution([urdf_launch_package, 'launch', 'description.launch.py']),
@@ -32,13 +36,15 @@ def generate_launch_description():
     ld.add_action(Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
-        condition=UnlessCondition(LaunchConfiguration('jsp_gui'))
+        condition=UnlessCondition(LaunchConfiguration('jsp_gui')),
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
 
     ld.add_action(Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
-        condition=IfCondition(LaunchConfiguration('jsp_gui'))
+        condition=IfCondition(LaunchConfiguration('jsp_gui')),
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
 
     ld.add_action(Node(
@@ -46,5 +52,6 @@ def generate_launch_description():
         executable='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('rviz_config')],
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
     return ld

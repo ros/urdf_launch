@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, SetParameter
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
@@ -22,7 +22,9 @@ def generate_launch_description():
 
     ld.add_action(DeclareLaunchArgument('use_tim_time',
                                         default_value='false',
+                                        choices=['true', 'false'],
                                         description='Use simulation clock if true'))
+    SetParameter(name='use_sim_time', value=LaunchConfiguration('use_sim_time'))
 
     # need to manually pass configuration in because of https://github.com/ros2/launch/issues/313
     ld.add_action(IncludeLaunchDescription(
@@ -37,14 +39,12 @@ def generate_launch_description():
         package='joint_state_publisher',
         executable='joint_state_publisher',
         condition=UnlessCondition(LaunchConfiguration('jsp_gui')),
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
 
     ld.add_action(Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         condition=IfCondition(LaunchConfiguration('jsp_gui')),
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
 
     ld.add_action(Node(
@@ -52,6 +52,5 @@ def generate_launch_description():
         executable='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('rviz_config')],
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     ))
     return ld

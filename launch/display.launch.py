@@ -20,7 +20,7 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument(name='rviz_config', default_value=default_rviz_config_path,
                                         description='Absolute path to rviz config file'))
 
-    ld.add_action(DeclareLaunchArgument('use_tim_time',
+    ld.add_action(DeclareLaunchArgument('use_sim_time',
                                         default_value='false',
                                         choices=['true', 'false'],
                                         description='Use simulation clock if true'))

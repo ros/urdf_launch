@@ -15,7 +15,7 @@ def generate_launch_description():
                                         description='The package where the robot description is located'))
     ld.add_action(DeclareLaunchArgument('urdf_package_path',
                                         description='The path to the robot description relative to the package root'))
-    ld.add_action(DeclareLaunchArgument('use_tim_time',
+    ld.add_action(DeclareLaunchArgument('use_sim_time',
                                         default_value='false',
                                         choices=['true', 'false'],
                                         description='Use simulation clock if true'))

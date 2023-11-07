@@ -22,7 +22,7 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     ld.add_action(IncludeLaunchDescription(
-        PathJoinSubstitution([FindPackageShare('urdf_launch'), 'launch', 'display.launch.py']),
+        PathJoinSubstitution([FindPackageShare('urdf_launch'), 'launch', 'description.launch.py']),
         launch_arguments={
             'urdf_package': 'turtlebot3_description',
             'urdf_package_path': PathJoinSubstitution(['urdf', 'turtlebot3_burger.urdf'])}.items()

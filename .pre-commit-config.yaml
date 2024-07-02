@@ -15,20 +15,20 @@ repos:
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
   - id: check-xml
-  rev: v4.5.0
+  rev: v4.6.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
     args:
     - --write-changes
-  rev: v2.2.6
+  rev: v2.3.0
 - repo: https://github.com/hhatto/autopep8
   hooks:
   - id: autopep8
-  rev: v2.1.0
+  rev: v2.3.1
 - repo: https://github.com/PyCQA/flake8
   hooks:
   - id: flake8
-  rev: 7.0.0
+  rev: 7.1.0
 ci:
   autoupdate_schedule: quarterly

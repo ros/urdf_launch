@@ -15,7 +15,7 @@ repos:
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
   - id: check-xml
-  rev: v4.6.0
+  rev: v5.0.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
@@ -29,6 +29,6 @@ repos:
 - repo: https://github.com/PyCQA/flake8
   hooks:
   - id: flake8
-  rev: 7.1.0
+  rev: 7.1.1
 ci:
   autoupdate_schedule: quarterly

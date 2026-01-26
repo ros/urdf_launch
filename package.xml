@@ -4,7 +4,7 @@
   <name>urdf_launch</name>
   <version>0.1.1</version>
   <description>Launch files for common URDF operations</description>
-  <maintainer email="davidvlu@gmail.com">David V. Lu!!</maintainer>
+  <maintainer email="david@metrorobots.com">David V. Lu!!</maintainer>
   <license>BSD 3-clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

@@ -32,6 +32,26 @@ def generate_launch_description():
 
 ```
 
+### In YAML / XML launch files
+`$(xacro-file <file> [name:=value ...])` processes a URDF/Xacro file within the launch process, e.g. for the
+`robot_description` parameter (declare it with `type: str`):
+
+```yaml
+launch:
+- arg: {name: prefix, default: ''}
+- node:
+    pkg: robot_state_publisher
+    exec: robot_state_publisher
+    param:
+    - name: robot_description
+      type: str
+      value: "$(xacro-file $(find-pkg-share my_robot_description)/urdf/robot.urdf.xacro prefix:=$(var prefix))"
+```
+
+Compared to `$(command 'xacro <file> name:=value')`, no shell is involved (values with spaces only need launch
+quotes, `'rpy:=0 0 1'`) and xacro errors are reported as substitution failures with the xacro message.
+In Python launch files, use `urdf_launch.XacroFile(file, ['name:=value'])`.
+
 ## Display Robot Model
 When developing a URDF robot model, it is often useful to display just the robot model in RViz. [`display.launch.py`](launch/display.launch.py) does the above tasks PLUS:
  * Launches RViz with a preconfigured setup
